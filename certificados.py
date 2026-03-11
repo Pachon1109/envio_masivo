@@ -33,7 +33,7 @@ Adjunto encontrarás tu certificado.
 Cordialmente"""
 )
 
-st.caption("Puedes usar las variables: {nombre}, {identificacion}, {email}")
+st.caption("Puedes usar las variables: {nombre}, {codigo}, {email}")
 
 # -------------------------
 # CARGA DE ARCHIVOS
@@ -72,12 +72,12 @@ if st.button("Enviar certificados"):
 
     for i, row in df.iterrows():
 
-        identificacion = str(row["identificacion"])
+        identificacion = str(row["codigo"])
         nombre = row["nombre"]
         email = row["email"]
 
         if identificacion not in pdf_dict:
-            fallidos.append([identificacion, nombre, email, "PDF no encontrado"])
+            fallidos.append([codigo, nombre, email, "PDF no encontrado"])
             continue
 
         try:
@@ -85,7 +85,7 @@ if st.button("Enviar certificados"):
             # Reemplazar variables en el mensaje
             texto = mensaje.format(
                 nombre=nombre,
-                identificacion=identificacion,
+                codigo=codigo,
                 email=email
             )
 
@@ -96,7 +96,7 @@ if st.button("Enviar certificados"):
 
             msg.set_content(texto)
 
-            pdf = pdf_dict[identificacion]
+            pdf = pdf_dict[codigo]
 
             msg.add_attachment(
                 pdf.read(),
@@ -107,10 +107,10 @@ if st.button("Enviar certificados"):
 
             smtp.send_message(msg)
 
-            enviados.append([identificacion, nombre, email, "Enviado"])
+            enviados.append([codigo, nombre, email, "Enviado"])
 
         except Exception as e:
-            fallidos.append([identificacion, nombre, email, str(e)])
+            fallidos.append([codigo, nombre, email, str(e)])
             st.error(f"Error enviando a {email}: {e}")
 
         progress.progress((i + 1) / total)
@@ -139,4 +139,5 @@ if st.button("Enviar certificados"):
             "Descargar reporte",
             f,
             file_name="reporte_envio.xlsx"
+
         )
