@@ -52,7 +52,8 @@ if st.button("Enviar certificados"):
         st.warning("Debe cargar el Excel y los certificados")
         st.stop()
 
-    df = pd.read_excel(excel_file)
+    #df = pd.read_excel(excel_file)
+    df = pd.read_excel(excel_file, dtype={"codigo": str})
 
     # Crear diccionario de PDFs
     pdf_dict = {}
@@ -141,4 +142,5 @@ if st.button("Enviar certificados"):
             file_name="reporte_envio.xlsx"
 
         )
+
 
