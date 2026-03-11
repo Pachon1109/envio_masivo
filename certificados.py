@@ -72,11 +72,11 @@ if st.button("Enviar certificados"):
 
     for i, row in df.iterrows():
 
-        identificacion = str(row["codigo"])
+        codigo = str(row["codigo"])
         nombre = row["nombre"]
         email = row["email"]
 
-        if identificacion not in pdf_dict:
+        if codigo not in pdf_dict:
             fallidos.append([codigo, nombre, email, "PDF no encontrado"])
             continue
 
@@ -141,3 +141,4 @@ if st.button("Enviar certificados"):
             file_name="reporte_envio.xlsx"
 
         )
+
